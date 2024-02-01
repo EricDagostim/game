@@ -1,6 +1,7 @@
 import "./style.css";
 import Phaser from "phaser";
-import Player from "./player";
+import MariaPlayer from "./Players/mariaPlayer";
+import GoblinPlayer from "./Players/goblinPlayer";
 
 const gameCanvas = document.getElementById("gameCanvas");
 
@@ -16,67 +17,43 @@ class GameScene extends Phaser.Scene {
     super({ key: "GameScene" });
     this.keyboard;
     this.player;
-    
-    this.playerSpeed = 160;
 
+    this.playerSpeed = 160;
   }
 
-  preload() {    
-
+  preload() {
     this.load.image("background", "/assets/background.jpg");
-    
-    
 
-    this.load.spritesheet("MariaIdle", "/assets/Maria-hero/Warrior_Sheet.png", {
+    this.load.spritesheet(
+      "MariaTexture",
+      "/assets/Maria-hero/Warrior_Sheet.png",
+      {
+        frameWidth: 18,
+        frameHeight: 44,
+      }
+    );
+
+    this.load.spritesheet("GoblinTexture", "/assets/Goblin-hero/Idle.png", {
       frameWidth: 150,
       frameHeight: 150,
-    });
-
-    
-
-    // this.load.spritesheet("playerAttack", "/assets/Skeleton/Attack.png", {
-    //   frameWidth: 150,
-    //   frameHeight: 150,
-    // });
-
-    // this.load.spritesheet("playerRun", "/assets/Skeleton/Walk.png", {
-    //   frameWidth: 150,
-    //   frameHeight: 150,
-    // });
-
-    // this.load.spritesheet("playerIdle", "/assets/Skeleton/Idle.png", {
-    //   frameWidth: 150,
-    //   frameHeight: 150,
-    // });
-
-    // this.load.spritesheet("playerDeath", "/assets/Skeleton/Death.png", {
-    //   frameWidth: 150,
-    //   frameHeight: 150,
-    // });
-
-    // this.load.spritesheet("playerTakeHit", "/assets/Skeleton/Take-Hit.png", {
-    //   frameWidth: 150,
-    //   frameHeight: 150,
-    // });
+    });    
   }
 
   create() {    
-
-    
-    this.player = new Player(this, 100, 100, 'Goblin', 'Idle');
-    background = this.add.image(0, 0, 'background').setOrigin(0, 0);
+        
+    background = this.add.image(0, 0, "background").setOrigin(0, 0);
     background.displayWidth = config.width;
     background.displayHeight = config.height;
 
+    this.maria = new MariaPlayer(this, 100, 100, "Maria");
+    this.maria.setScale(2);
 
-
-
-    this.keyboard = this.input.keyboard.createCursorKeys();
-    
+    // this.goblin = new GoblinPlayer(this, 200, 100, 'Goblin');
+    // this.goblin.setScale(2);
   }
 
-  update() {    
-    
+  update() {
+    this.maria.update(this.input.keyboard.createCursorKeys());
   }
 }
 
