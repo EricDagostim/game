@@ -2,6 +2,8 @@ import "./style.css";
 import Phaser from "phaser";
 import MariaPlayer from "./Players/mariaPlayer";
 import GoblinPlayer from "./Players/goblinPlayer";
+import MonkaPlayer from "./Players/monkaPlayer";
+import NighterPlayer from "./Players/nighterPlayer";
 
 const gameCanvas = document.getElementById("gameCanvas");
 
@@ -26,17 +28,41 @@ class GameScene extends Phaser.Scene {
 
     this.load.spritesheet(
       "MariaTexture",
-      "/assets/Maria-hero/Warrior_Sheet.png",
+      "/assets/Maria-hero/maria-sheet.png",
       {
-        frameWidth: 18,
+        frameWidth: 64,
         frameHeight: 44,
       }
     );
 
-    this.load.spritesheet("GoblinTexture", "/assets/Goblin-hero/Idle.png", {
-      frameWidth: 150,
-      frameHeight: 150,
-    });    
+    this.load.spritesheet(
+      "NighterTexture",
+      "/assets/Nighter-hero/Nighter-sheet.png",
+      {
+        frameWidth: 80,
+        frameHeight: 80,
+      }
+    );
+
+
+
+
+    this.load.spritesheet(
+      "MonkaTexture",
+      "/assets/Monka-hero/Monka-sheet.png",
+      {
+        frameWidth: 288,
+        frameHeight: 128,
+      }
+    );
+
+    this.load.spritesheet(
+      "GoblinTexture", 
+      "/assets/Goblin-hero/Idle.png", 
+      {
+        frameWidth: 150,
+        frameHeight: 150,
+      });    
   }
 
   create() {    
@@ -46,10 +72,13 @@ class GameScene extends Phaser.Scene {
     background.displayHeight = config.height;
 
     this.maria = new MariaPlayer(this, 100, 100, "Maria");
-    this.maria.setScale(2);
+    this.maria.setScale(2.5);
 
-    // this.goblin = new GoblinPlayer(this, 200, 100, 'Goblin');
-    // this.goblin.setScale(2);
+    // this.monka = new MonkaPlayer(this, 200, 100, 'Monka');    
+    // this.monka.setScale(4);
+
+    // this.nighter = new NighterPlayer(this, 200, 100, 'Monka');
+    // this.nighter.setScale(3.5);
   }
 
   update() {

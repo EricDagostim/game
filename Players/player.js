@@ -21,12 +21,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   createAnimations() {   
 
-    this.scene.anims.create({
-      key: "Idle",
-      frames: this.scene.anims.generateFrameNumbers(this.texture.key, { start: 0, end: 3}),
-      frameRate: 3,
-      repeat: -1    
-    });
+
   }
 
   update(cursors) {    
