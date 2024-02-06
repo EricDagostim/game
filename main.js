@@ -72,17 +72,16 @@ class GameScene extends Phaser.Scene {
     background.displayHeight = config.height;
 
     this.maria = new MariaPlayer(this, 0, 0, "Maria");
-    this.maria.setScale(4);
-
-    // this.monka = new MonkaPlayer(this, 200, 100, 'Monka');    
-    // this.monka.setScale(4);
-
-    // this.nighter = new NighterPlayer(this, 200, 100, 'Monka');
-    // this.nighter.setScale(3.5);
+    this.maria.setScale(2);
   }
 
-  update() {
-    this.maria.update(this.input.keyboard.createCursorKeys());
+  update() {    
+    this.maria.update(this.input.keyboard.createCursorKeys());    
+    
+    this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
   }
 }
 

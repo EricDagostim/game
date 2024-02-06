@@ -5,13 +5,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, textureKey);
 
     // Configura a física do personagem
-
     this.scene = scene;
     this.scene.physics.world.enableBody(this, 0);
     this.body.setCollideWorldBounds(true);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-
     this.playerSpeed = playerSpeed;
     this.playerJumpValue = playerJumpValue;
 
@@ -21,41 +19,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   createAnimations() {}
 
-  runRight() {
-    this.body.setVelocityX(this.playerSpeed);
-    this.anims.play("Run", true);
-    this.flipX = false;
-  }
+  runRight() {}
 
-  runLeft() {
-    this.body.setVelocityX(-this.playerSpeed);
-    this.anims.play("Run", true);
-    this.flipX = true;
-  }
+  runLeft() {}
 
-  jump() {
-    this.body.setVelocityY(-this.playerJumpValue);
-    this.anims.play("Jump", true);
-  } 
+  jump() {}
 
   idle() {
-    this.body.setVelocityX(0);      
-    this.anims.play("Idle", true);
+    this.body.setVelocityX(0);    
   }
 
+  fall() {} 
+
   update(cursors) {
+
     if (!cursors.left.isDown && !cursors.right.isDown && this.body.onFloor()) {
-      this.idle();  
+      this.idle();
     } else {
       if (cursors.left.isDown) {
-        this.runLeft(); 
-      }
-      else if (cursors.right.isDown) {
+        this.runLeft();
+      } else if (cursors.right.isDown) {
         this.runRight();
       }
     }
+
     if (cursors.up.isDown && this.body.onFloor()) {
       this.jump();
     }
+
   }
 }
