@@ -11,7 +11,7 @@ const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
-const speedDown = 300;
+const speedDown = 600;
 var background;
 
 class GameScene extends Phaser.Scene {
@@ -20,7 +20,7 @@ class GameScene extends Phaser.Scene {
     this.keyboard;
     this.player;
 
-    this.playerSpeed = 160;
+    this.playerSpeed = 600;
   }
 
   preload() {
@@ -71,8 +71,8 @@ class GameScene extends Phaser.Scene {
     background.displayWidth = config.width;
     background.displayHeight = config.height;
 
-    this.maria = new MariaPlayer(this, 100, 100, "Maria");
-    this.maria.setScale(2.5);
+    this.maria = new MariaPlayer(this, 0, 0, "Maria");
+    this.maria.setScale(4);
 
     // this.monka = new MonkaPlayer(this, 200, 100, 'Monka');    
     // this.monka.setScale(4);
@@ -95,7 +95,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: speedDown },
-      debug: true,
+      debug: false,
     },
   },
   scene: [GameScene],

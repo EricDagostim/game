@@ -2,7 +2,7 @@ import Player from "./player";
 
 export default class MariaPlayer extends Player {
   constructor(scene, x, y, name) {
-    super(scene, x, y, "MariaTexture", 160, name);
+    super(scene, x, y, "MariaTexture", 300, 400, name);
   }
 
   createAnimations() {
@@ -13,7 +13,7 @@ export default class MariaPlayer extends Player {
         start: 0,
         end: 5,
       }),
-      frameRate: 10,
+      frameRate: 8,
       repeat: -1,
     });
 
@@ -38,39 +38,77 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Attack",
+      key: "Fall",
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 17,
-        end: 28,
+        end: 19,
       }),
       frameRate: 10,
       repeat: -1,
     });
+
+    this.scene.anims.create({
+      key: "Attack",
+      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
+        start: 20,
+        end: 32,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "Slide",
+      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
+        start: 33,
+        end: 37,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "DashAttack",
+      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
+        start: 38,
+        end: 44,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "Dash",
+      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
+        start: 45,
+        end: 54,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    
   }
 
   update(cursors) {
-    // this.body.setVelocity(0);
-    this.body.setAcceleration(0);
-    
-    if (cursors.left.isDown) {
-      this.body.setVelocityX(-this.scene.playerSpeed);
-      this.anims.play("Run", true);
-      this.flipX = true;
-    } else if (cursors.up.isDown) {
-      this.body.setVelocityY(-this.scene.playerSpeed);
-      this.anims.play("Jump", true);
-      this.flipX = false;
-    } else if (cursors.right.isDown) {
-      this.body.setVelocityX(this.scene.playerSpeed);
-      this.anims.play("Run", true);
-      this.flipX = false;
-    } else if (cursors.space.isDown) {
-      this.anims.play("Attack", true);
-    } else {
-      this.anims.play("Idle", true);
+    super.update(cursors);
+    // adicionar habilidades específicas da Maria 
+
+    if (cursors.down.isDown) {
+      this.anims.play("Slide", true);
+      
     }
 
-   
-    
+    if (cursors.space.isDown) {
+      this.anims.play("DashAttack", true);
+    }
+
+    if (cursors.shift.isDown) {
+      this.anims.play("Dash", true);
+    }
+
+
+
+   // adicionar habilidades específicas da Maria    
   }
 }
