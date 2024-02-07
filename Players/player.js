@@ -1,10 +1,9 @@
 // player.js - Classe Base
 import Phaser from "phaser";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, textureKey, playerJumpValue, playerSpeed, name) {
+  constructor(scene, x, y, textureKey, playerJumpValue, playerSpeed, name, playerID) {
     super(scene, x, y, textureKey);
 
-    // Configura a física do personagem
     this.scene = scene;
     this.scene.physics.world.enableBody(this, 0);
     this.body.setCollideWorldBounds(true);
@@ -12,9 +11,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this);
     this.playerSpeed = playerSpeed;
     this.playerJumpValue = playerJumpValue;
-
+         
     this.name = name;
-    this.createAnimations();
+    this.createAnimations();    
   }
 
   createAnimations() {}
@@ -28,10 +27,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   idle() {
     this.body.setVelocityX(0);    
   }
-
+  
   fall() {} 
 
   update(cursors) {
+
 
     if (!cursors.left.isDown && !cursors.right.isDown && this.body.onFloor()) {
       this.idle();

@@ -71,12 +71,14 @@ class GameScene extends Phaser.Scene {
     background.displayWidth = config.width;
     background.displayHeight = config.height;
 
-    this.maria = new MariaPlayer(this, 0, 0, "Maria");
+    this.maria = new MariaPlayer(this, 0, 0, "Maria", 1);
     this.maria.setScale(2);
+
+  
   }
 
   update() {    
-    this.maria.update(this.input.keyboard.createCursorKeys());    
+    this.maria.update(this.input.keyboard.createCursorKeys());        
     
     this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);

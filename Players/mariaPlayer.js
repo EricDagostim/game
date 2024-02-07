@@ -1,12 +1,11 @@
 import Player from "./player";
 
 export default class MariaPlayer extends Player {
-  constructor(scene, x, y, name) {
+  constructor(scene, x, y, name, playerID) {
     super(scene, x, y, "MariaTexture", 300, 400, name);
-
     this.scene = scene;
     this.name = name;
-
+    this.id 
     this.keyQ = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
@@ -16,7 +15,7 @@ export default class MariaPlayer extends Player {
   createAnimations() {
     super.createAnimations();
     this.scene.anims.create({
-      key: "Idle",
+      key: "Idle" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 0,
         end: 5,
@@ -26,7 +25,7 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Run",
+      key: "Run" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 6,
         end: 13,
@@ -36,7 +35,7 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Jump",
+      key: "Jump" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 14,
         end: 16,
@@ -46,7 +45,7 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Fall",
+      key: "Fall" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 17,
         end: 19,
@@ -56,7 +55,7 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Attack",
+      key: "Attack" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 20,
         end: 32,
@@ -65,28 +64,28 @@ export default class MariaPlayer extends Player {
     });
 
     this.scene.anims.create({
-      key: "Slide",
+      key: "Slide" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 33,
-        end: 37,
+        end: 36,
       }),
       frameRate: 10,
     });
 
     this.scene.anims.create({
-      key: "Dash",
+      key: "Dash" + this.id, 
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-        start: 38,
+        start: 37,
         end: 44,
       }),
       frameRate: 10,
     });
 
     this.scene.anims.create({
-      key: "DashAttack",
+      key: "DashAttack" + this.id,
       frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
         start: 45,
-        end: 54,
+        end: 53,
       }),
       frameRate: 10,
     });
@@ -98,7 +97,7 @@ export default class MariaPlayer extends Player {
     this.body.setVelocityX(this.playerSpeed);
 
     if (this.body.onFloor()) {
-      this.anims.play("Run", true);
+      this.anims.play("Run" + this.id, true);
     }
     this.flipX = false;
   }
@@ -108,7 +107,7 @@ export default class MariaPlayer extends Player {
     this.body.setVelocityX(-this.playerSpeed);
 
     if (this.body.onFloor()) {
-      this.anims.play("Run", true);
+      this.anims.play("Run" + this.id, true);
     }
 
     this.flipX = true;
@@ -117,13 +116,13 @@ export default class MariaPlayer extends Player {
   jump() {
     super.jump();
     this.body.setVelocityY(-this.playerJumpValue);
-    this.anims.play("Jump", true);
+    this.anims.play("Jump" + this.id, true);
   }
 
   fall() {
     super.fall();
     if (this.body.velocity.y > 0) {
-      this.anims.play("Fall", true);
+      this.anims.play("Fall" + this.id, true);
     }
   }
 
@@ -135,42 +134,34 @@ export default class MariaPlayer extends Player {
       !this.keyE.isDown &&
       !this.keyR.isDown
     ) {
-      this.anims.play("Idle", true);
+      this.anims.play("Idle" + this.id, true);
     }
   }
 
   attack() {
-    this.anims.play("Attack", true);
+    this.anims.chain("Idle" + this.id);
+    this.anims.play("Attack" + this.id, true);
   }
-  
 
   dash() {
-    if (!this.isDashing && !this.anims.isPlaying) {
-      this.anims.play("Dash", true);
-      this.isDashing = true;
+    if (this.anims.isPlaying) {
+      this.anims.chain("Idle" + this.id);
+      this.anims.play("Dash" + this.id,  true);
+
       if (this.flipX) {
-        this.body.x -= 60;
+        this.body.x -= 10;
       } else {
-        this.body.x += 60;
+        this.body.x += 10;
       }
-      // Define um tempo limite para o dash
-      this.scene.time.delayedCall(500, () => {
-        this.isDashing = false;
-      });
     }
   }
-
-  // Método chamado quando a tecla de dash é liberada
-  dashReleased() {
-    this.isDashing = false;
-  }
-
+  
   slide() {
-    this.anims.play("Slide", true);
+    this.anims.play("Slide" + this.id, true);
   }
 
   dashAttack() {
-    this.anims.play("DashAttack", true);
+    this.anims.play("DashAttack" + this.id, true);
   }
 
   update(cursors) {
@@ -186,10 +177,6 @@ export default class MariaPlayer extends Player {
 
     if (this.keyW.isDown) {
       this.slide();
-    }
-
-    if (this.keyE.isDown) {
-      this.dashReleased();
     }
 
     if (this.keyR.isDown) {
